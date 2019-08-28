@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name $hostlist;
+
+    location / {
+        include snippets/proxy.conf;
+        proxy_pass http://$BACKEND;
+    }
+
+    location /.well-known {
+        root $SSLCHALLENGE; # local filesystem path
+    }
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+}
